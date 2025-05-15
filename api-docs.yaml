@@ -1,0 +1,259 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080/catalogo-do-sabio
+  description: Generated server url
+tags:
+- name: Livros
+  description: Operações relacionadas ao gerenciamento de livros
+- name: Usuários
+  description: Operações relacionadas ao gerenciamento de usuários
+paths:
+  /users/register:
+    post:
+      tags:
+      - Usuários
+      summary: Cadastra um novo usuário
+      description: Retorna o usuário cadastrado
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserApi'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserApiDTO'
+  /users/get/{username}:
+    post:
+      tags:
+      - Usuários
+      summary: Busca um usuário
+      description: Busca um usuário pelo seu username
+      operationId: registerUser_1
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserApiDTO'
+  /books:
+    get:
+      tags:
+      - Livros
+      summary: Busca todos os livros
+      description: Retorna uma lista de livros paginada
+      operationId: getAllBooks
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDTO'
+  /books/{id}:
+    get:
+      tags:
+      - Livros
+      summary: Busca um livro pelo ISBN
+      description: Retorna um livro baseado no ISBN fornecido
+      operationId: getBookById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookDTO'
+  /books/recents:
+    get:
+      tags:
+      - Livros
+      summary: Lista os livros buscados recentemente pelo usuario
+      description: Retorna uma lista com os ultimos cinco livros pesquisados pelo
+        usuario
+      operationId: getRecentBooks
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDTO'
+  /books/genre/{genre}:
+    get:
+      tags:
+      - Livros
+      summary: Busca todos os livros de um genero
+      description: Retorna uma lista de livros paginada baseado no genero fornecido
+      operationId: getBookByGenre
+      parameters:
+      - name: genre
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDTO'
+  /books/author/{author}:
+    get:
+      tags:
+      - Livros
+      summary: Busca todos os livros de um autor
+      description: Retorna uma lista de livros paginada baseado no autor fornecido
+      operationId: getBookByAuthor
+      parameters:
+      - name: author
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: size
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDTO'
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        isbn:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        publisher:
+          type: string
+        year:
+          type: string
+        genres:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+    UserApi:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        booksSeen:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+    UserApiDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    BookDTO:
+      type: object
+      properties:
+        isbn:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        publisher:
+          type: string
+        year:
+          type: string
+        genres:
+          type: array
+          items:
+            type: string
+        description:
+          type: string

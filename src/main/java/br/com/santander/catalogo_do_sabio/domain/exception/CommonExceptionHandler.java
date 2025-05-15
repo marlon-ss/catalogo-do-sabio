@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class CommonExceptionHandler {
 
     @ExceptionHandler(DataNotFoundException.class)
-    public ResponseEntity<CommonError> objectNotFound(DataNotFoundException exception, HttpServletRequest request) {
+    public ResponseEntity<CommonError> dataNotFound(DataNotFoundException exception, HttpServletRequest request) {
 
         CommonError error = new CommonError(
                 HttpStatus.NOT_FOUND.value(),
@@ -55,4 +56,18 @@ public class CommonExceptionHandler {
 
         return ResponseEntity.badRequest().body(error);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<CommonError> handleAccessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
+        CommonError error = new CommonError(
+                HttpStatus.UNAUTHORIZED.value(),
+                "Acesso não autorizado",
+                "Você não tem permissão para acessar este recurso"
+        );
+
+        log.error("ExceptionHandler Unauthorized: {}", exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
 }

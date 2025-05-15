@@ -30,7 +30,7 @@ public class UserApiService {
             );
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));;
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -46,7 +46,7 @@ public class UserApiService {
         Optional<UserApi> userOptional = userRepository.findByUsername(user.getUsername());
         if (userOptional.isPresent()) {
             UserApi userDb = userOptional.get();
-            userDb.setPassword(passwordEncoder.encode(user.getPassword()));
+            userDb.setBooksSeen(user.getBooksSeen());
             return userRepository.save(userDb);
         } else {
             throw new DataNotFoundException("Usuário não encontrado");

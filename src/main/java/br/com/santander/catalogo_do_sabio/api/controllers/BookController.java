@@ -24,7 +24,7 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "Busca todos os livros", description = "Retorna uma lista de livros paginada")
-    public ResponseEntity<List<BookDTO>>getAllBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
+    public ResponseEntity<List<BookDTO>> getAllBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Page<Book> books = bookService.findAll(PageRequest.of(page, size));
 
         List<BookDTO> booksDTOs = books.getContent()
@@ -42,14 +42,14 @@ public class BookController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca um livro pelo ISBN", description = "Retorna um livro baseado no ISBN fornecido")
-    public ResponseEntity<BookDTO>getBookById(@PathVariable("id") String id) {
+    public ResponseEntity<BookDTO> getBookById(@PathVariable("id") String id) {
         Book book = bookService.findByIsbn(id);
         return ResponseEntity.ok(new BookDTO(book));
     }
 
     @GetMapping("/genre/{genre}")
     @Operation(summary = "Busca todos os livros de um genero", description = "Retorna uma lista de livros paginada baseado no genero fornecido")
-    public ResponseEntity<List<BookDTO>>getBookByGenre(@PathVariable("genre") String genre, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
+    public ResponseEntity<List<BookDTO>> getBookByGenre(@PathVariable("genre") String genre, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Page<Book> books = bookService.findByGenresContainingIgnoreCase(genre, PageRequest.of(page, size));
 
         List<BookDTO> booksDTOs = books.getContent()
@@ -67,7 +67,7 @@ public class BookController {
 
     @GetMapping("/author/{author}")
     @Operation(summary = "Busca todos os livros de um autor", description = "Retorna uma lista de livros paginada baseado no autor fornecido")
-    public ResponseEntity<List<BookDTO>>getBookByAuthor(@PathVariable("author") String author, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
+    public ResponseEntity<List<BookDTO>> getBookByAuthor(@PathVariable("author") String author, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Page<Book> books = bookService.findByAuthorContainingIgnoreCase(author, PageRequest.of(page, size));
 
         List<BookDTO> booksDTOs = books.getContent()
@@ -85,7 +85,7 @@ public class BookController {
 
     @GetMapping("/recents")
     @Operation(summary = "Lista os livros buscados recentemente pelo usuario", description = "Retorna uma lista com os ultimos cinco livros pesquisados pelo usuario")
-    public ResponseEntity<List<BookDTO>>getRecentBooks() {
+    public ResponseEntity<List<BookDTO>> getRecentBooks() {
         LinkedList<Book> booksSeen = bookService.getRecentBooks();
         List<BookDTO> booksDTOs = booksSeen.stream()
                 .map(BookDTO::new)

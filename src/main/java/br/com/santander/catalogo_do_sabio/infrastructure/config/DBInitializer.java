@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -19,15 +18,15 @@ import java.util.Random;
 
 @Configuration
 @Slf4j
-public class DBInitializer implements CommandLineRunner{
+public class DBInitializer implements CommandLineRunner {
     @Autowired
     private BookRepository bookRepository;
     @Autowired
     private UserApiRepository userRepository;
     private final Faker faker = new Faker();
-    
+
     @Override
-    @CacheEvict(value = { "books", "bookById", "booksByAuthor", "booksByGenre"}, allEntries = true)
+    @CacheEvict(value = {"books", "bookById", "booksByAuthor", "booksByGenre"}, allEntries = true)
     public void run(String... args) {
         bookRepository.deleteAll();
         userRepository.deleteAll();
@@ -43,7 +42,7 @@ public class DBInitializer implements CommandLineRunner{
 
         UserApi user = new UserApi("user123", new BCryptPasswordEncoder().encode("pass123"), List.of("USER"));
         users.add(user);
-        
+
         userRepository.insert(users);
         log.info("Dados de usuarios gerados com sucesso!");
     }

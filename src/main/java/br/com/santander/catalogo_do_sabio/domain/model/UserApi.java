@@ -18,12 +18,21 @@ public class UserApi implements Serializable {
     private List<String> roles;
     private LinkedList<Book> booksSeen = new LinkedList<>();
 
-    public UserApi() {}
+    public UserApi() {
+    }
 
     public UserApi(String username, String password, List<String> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -50,9 +59,13 @@ public class UserApi implements Serializable {
         this.roles = roles;
     }
 
-    public LinkedList<Book> getBooksSeen() { return booksSeen; }
+    public LinkedList<Book> getBooksSeen() {
+        return booksSeen;
+    }
 
-    public void setBooksSeen(LinkedList<Book> booksSeen) { this.booksSeen = booksSeen; }
+    public void setBooksSeen(LinkedList<Book> booksSeen) {
+        this.booksSeen = booksSeen;
+    }
 
     @Override
     public String toString() {
