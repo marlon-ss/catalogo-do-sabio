@@ -28,7 +28,7 @@ Feitos esses passos, o serviço ficará disponível na porta 8080
 
 ## 📚 Documentação da API
 
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- Swagger UI: `http://localhost:8080/catalogo-do-sabio/swagger-ui/index.html#/`
 
 
 ## 🔍 Endpoints
