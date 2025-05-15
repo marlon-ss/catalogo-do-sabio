@@ -33,10 +33,22 @@ public class UserApiService {
         return userRepository.save(user);
     }
 
-    public UserApi getUser(String username) {
+    public UserApi findUserByUsername(String username) {
         log.info("Buscando usuário: {}", username);
         UserApi user = userRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("Sem usuários com este username"));
         log.info("Usuário encontrado: {}", user.toString());
         return user;
+    }
+
+    public UserApi updateUser(UserApi user) {
+        log.info("Atualizando usuário: {}", user.getUsername());
+        Optional<UserApi> userOptional = userRepository.findByUsername(user.getUsername());
+        if (userOptional.isPresent()) {
+            UserApi userDb = userOptional.get();
+            userDb.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(userDb);
+        } else {
+            throw new DataNotFoundException("Usuário não encontrado");
+        }
     }
 }

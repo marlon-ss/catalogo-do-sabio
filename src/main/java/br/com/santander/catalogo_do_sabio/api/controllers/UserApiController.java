@@ -29,6 +29,6 @@ public class UserApiController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Busca um usuário", description = "Busca um usuário pelo seu username")
     public ResponseEntity<UserApiDTO> registerUser(@PathVariable String username) {
-        return ResponseEntity.ok(new UserApiDTO(userService.getUser(username)));
+        return ResponseEntity.ok(new UserApiDTO(userService.findUserByUsername(username)));
     }
 }

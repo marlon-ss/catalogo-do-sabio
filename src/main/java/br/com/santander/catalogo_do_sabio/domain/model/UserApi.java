@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 @Document(collection = "users")
@@ -15,6 +16,7 @@ public class UserApi implements Serializable {
     private String username;
     private String password;
     private List<String> roles;
+    private LinkedList<Book> booksSeen = new LinkedList<>();
 
     public UserApi() {}
 
@@ -56,4 +58,19 @@ public class UserApi implements Serializable {
                 ", roles=" + roles +
                 '}';
     }
+
+    public void addBook(Book lastBookSeen) {
+        if (booksSeen == null) {
+            booksSeen = new LinkedList<>();
+        }
+
+        booksSeen.removeIf(book -> book.getIsbn().equals(lastBookSeen.getIsbn()));
+
+        if (booksSeen.size() >= 5) {
+            booksSeen.removeLast();
+        }
+
+        booksSeen.addFirst(lastBookSeen);
+    }
+
 }
