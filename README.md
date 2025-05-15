@@ -118,8 +118,8 @@ GET /books/genre/Terror?page=2&size=15
 - O desgin deste serviço foi desenvolvido pensando em escalabilidade e performance.
 Para a escalabilidade foi utilizado um banco NoSQL (MongoDB) e foi utilizado o Redis como cache 
 para que o serviço ganhe em performance e também visando escalabilidade com cache distribuído.
-- Para a documentação, foi utilizado o Swagger por ser um metodo simples e intuitivo de visualizar 
-as propriedas e funcionalidades da API.
+- Para a documentação, foi utilizado o Swagger por ser um método simples e intuitivo de visualizar 
+as propriedades e funcionalidades da API.
 
 ### II. Explicação sobre a aplicação
 - A aplicação foi desenvolvida visando ser um sistema simples de pesquisa de livros;
