@@ -128,20 +128,20 @@ as propriedades e funcionalidades da API.
 - Quando consumido o endpoint de busca específica por um livro, este livro ficará salvo aos recentes do usuário
   (limitado em 5 livros);
 - Na inicialização do serviço e do banco de dados, é criado um usuário admin, o qual terá acesso aos endpoints do UserApiController;
-- Neste controller será possivel criar novos usuários, tanto usarios comuns, quanto admin.
+- Neste controller será possível criar novos usuários, tanto usuários comuns, quanto admin.
 - Para o tratamento de exceções, os endpoints retornarão status 404 com uma mensagem informando que o objeto pesquisado não foi encontrado,
 seja ele um usuário ou livro;
 - Caso um usuário admin tente criar um outro usuário com um username já existente, esta chamada retornará um status 400
 informando que já existe um usuário com este username.
-- As buscas de livros por genero e autor, podem ser feitas com um texto parcial. Ex.: Autor: Marlon, a pesquisa pode ser feita enviando somente "mar".
+- As buscas de livros por gênero e autor, podem ser feitas com um texto parcial. Ex.: Autor: Marlon, a pesquisa pode ser feita enviando somente "mar".
 
 ### III. Melhorias e considerações finais
 #### Pontos de melhoria:
 - Troca do basic auth para autenticaçao JWT;
-- Criação de novos endpoints para inclusao, atualizaçao e exclusao de livros, exclusao e atualizaçao de usuarios;
+- Criação de novos endpoints para inclusão, atualização e exclusão de livros, exclusão e atualização de usuários;
 - Criação de novos filtros para melhores buscas aos livros
 
 #### Considerações finais:
-Entrega feita seguiundo todos os requisitos solicitados, incluindo os opcionais e com um extra incluindo a autenticação.
+Entrega feita seguindo todos os requisitos solicitados, incluindo os opcionais e com um extra incluindo a autenticação.
 Durante o desenvolvimento esbarrei em alguns problemas com a configuração do Redis, MongoDB e Docker, principalmente para
 rodar tudo no container, mas tais problemas foram contornados e o serviço foi entregue funcional.
