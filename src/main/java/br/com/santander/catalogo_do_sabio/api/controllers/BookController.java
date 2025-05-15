@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -46,7 +47,7 @@ public class BookController {
         return ResponseEntity.ok(new BookDTO(book));
     }
 
-    @GetMapping("genre/{genre}")
+    @GetMapping("/genre/{genre}")
     @Operation(summary = "Busca todos os livros de um genero", description = "Retorna uma lista de livros paginada baseado no genero fornecido")
     public ResponseEntity<List<BookDTO>>getBookByGenre(@PathVariable("genre") String genre, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Page<Book> books = bookService.findByGenresContainingIgnoreCase(genre, PageRequest.of(page, size));
@@ -64,7 +65,7 @@ public class BookController {
                 .body(booksDTOs);
     }
 
-    @GetMapping("author/{author}")
+    @GetMapping("/author/{author}")
     @Operation(summary = "Busca todos os livros de um autor", description = "Retorna uma lista de livros paginada baseado no autor fornecido")
     public ResponseEntity<List<BookDTO>>getBookByAuthor(@PathVariable("author") String author, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "50") int size) {
         Page<Book> books = bookService.findByAuthorContainingIgnoreCase(author, PageRequest.of(page, size));
@@ -80,5 +81,16 @@ public class BookController {
                 .header("X-Current-Page", String.valueOf(books.getNumber()))
                 .header("X-Page-Size", String.valueOf(books.getSize()))
                 .body(booksDTOs);
+    }
+
+    @GetMapping("/recents")
+    @Operation(summary = "Lista os livros buscados recentemente pelo usuario", description = "Retorna uma lista com os ultimos cinco livros pesquisados pelo usuario")
+    public ResponseEntity<List<BookDTO>>getRecentBooks() {
+        LinkedList<Book> booksSeen = bookService.getRecentBooks();
+        List<BookDTO> booksDTOs = booksSeen.stream()
+                .map(BookDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(booksDTOs);
     }
 }

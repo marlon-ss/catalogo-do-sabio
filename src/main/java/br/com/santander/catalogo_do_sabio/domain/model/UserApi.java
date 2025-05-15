@@ -50,6 +50,10 @@ public class UserApi implements Serializable {
         this.roles = roles;
     }
 
+    public LinkedList<Book> getBooksSeen() { return booksSeen; }
+
+    public void setBooksSeen(LinkedList<Book> booksSeen) { this.booksSeen = booksSeen; }
+
     @Override
     public String toString() {
         return "UserApi{" +

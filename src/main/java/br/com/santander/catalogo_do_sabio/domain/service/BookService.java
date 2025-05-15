@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
+
 @Service
 @Slf4j
 public class BookService {
@@ -32,7 +34,7 @@ public class BookService {
     public Book findByIsbn(String isbn) {
         log.info("buscando livro pelo ISBN: {}", isbn);
         Book book = bookRepository.findByIsbn(isbn).orElseThrow(() -> new DataNotFoundException("Sem livros com este ISBN"));
-        UserApi user = getCurrentUser();
+        UserApi user = userService.getCurrentUser();
         user.addBook(book);
         userService.updateUser(user);
         log.info("livro encontrado: {}", book.toString());
@@ -57,11 +59,9 @@ public class BookService {
         return books;
     }
 
-    private UserApi getCurrentUser() {
-        String username = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName();
-        return userService.findUserByUsername(username);
+    public LinkedList<Book> getRecentBooks() {
+        log.info("buscando livros recentes");
+        UserApi user = userService.getCurrentUser();
+        return user.getBooksSeen();
     }
-
 }

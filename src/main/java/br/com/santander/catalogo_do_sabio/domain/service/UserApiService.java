@@ -6,6 +6,7 @@ import br.com.santander.catalogo_do_sabio.infrastructure.repository.UserApiRepos
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -50,5 +51,12 @@ public class UserApiService {
         } else {
             throw new DataNotFoundException("Usuário não encontrado");
         }
+    }
+
+    public UserApi getCurrentUser() {
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+        return findUserByUsername(username);
     }
 }
