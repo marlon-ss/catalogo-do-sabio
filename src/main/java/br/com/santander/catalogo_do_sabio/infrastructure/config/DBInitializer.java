@@ -48,7 +48,7 @@ public class DBInitializer implements CommandLineRunner {
     }
 
     private void createBooks() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100000; i++) {
             ArrayList<String> genreList = new ArrayList<>();
 
             Random random = new Random();
