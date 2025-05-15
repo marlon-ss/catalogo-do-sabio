@@ -25,7 +25,7 @@ public class UserApiController {
         return ResponseEntity.ok(new UserApiDTO(userService.createUser(user)));
     }
 
-    @PostMapping("/get/{username}")
+    @GetMapping("/get/{username}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Busca um usuário", description = "Busca um usuário pelo seu username")
     public ResponseEntity<UserApiDTO> registerUser(@PathVariable String username) {
