@@ -33,9 +33,27 @@ Feitos esses passos, o serviço ficará disponível na porta 8080
 
 ## 🔍 Endpoints
 
+### Usuário admin padrão para autenticação: 
+- user: admin 
+- password: admin123
+
 ### Usuários
 - POST `/users/register` - Registro de novo usuário (apenas ADMIN)
-- POST `/users/get/{username}` - Busca de usuário (apenas ADMIN)
+- GET `/users/get/{username}` - Busca de usuário (apenas ADMIN)
+
+```bash
+# Criar usuário
+POST /users/register
+
+body: 
+{
+    "username": "test",
+    "password": "pass123",
+    "roles": [
+        "USER"
+    ]
+}
+```
 
 ### Livros
 - GET `/books` - Lista todos os livros (paginado)
