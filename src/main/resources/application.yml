@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: catalogo-do-sabio
+
+  cache:
+    type: redis
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+    mongodb:
+      port: 27017
+      host: mongodb
+      username: root
+      password: secret
+      database: catalogo-do-sabio
+      authentication-database: admin
+
+server:
+  servlet:
+    context-path: /catalogo-do-sabio
